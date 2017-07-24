@@ -1,0 +1,45 @@
+import { Component, Input, ViewEncapsulation, TemplateRef, ElementRef } from '@angular/core';
+import { TreeNode } from '../models/tree-node.model';
+import { deprecatedSelector } from '../deprecated-selector';
+
+@Component({
+  selector: 'TreeNode, tree-node',
+  encapsulation: ViewEncapsulation.None,
+  styles: [],
+  template: `
+    <ng-container *mobxAutorun>
+      <div
+        *ngIf="!templates.treeNodeFullTemplate"
+        [class]="node.getClass()"
+        [class.tree-node]="true"
+        [class.tree-node-expanded]="node.isExpanded && node.hasChildren"
+        [class.tree-node-collapsed]="node.isCollapsed && node.hasChildren"
+        [class.tree-node-leaf]="node.isLeaf"
+        [class.tree-node-active]="node.isActive"
+        [class.tree-node-focused]="node.isFocused"
+        >
+
+        <tree-node-drop-slot *ngIf="index === 0" [dropIndex]="node.index" [node]="node.parent"></tree-node-drop-slot>
+
+        <tree-node-wrapper [node]="node" [index]="index" [templates]="templates"></tree-node-wrapper>
+
+        <tree-node-children [node]="node" [templates]="templates"></tree-node-children>
+        <tree-node-drop-slot [dropIndex]="node.index + 1" [node]="node.parent"></tree-node-drop-slot>
+      </div>
+      <ng-container
+        [ngTemplateOutlet]="templates.treeNodeFullTemplate"
+        [ngOutletContext]="{ $implicit: node, node: node, index: index, templates: templates }">
+      </ng-container>
+    </ng-container>`
+})
+
+export class TreeNodeComponent {
+  @Input() node: TreeNode;
+  @Input() index: number;
+  @Input() templates: any;
+
+  constructor(private elementRef: ElementRef) {
+    deprecatedSelector('TreeNode', 'tree-node', elementRef);
+  }
+
+}
