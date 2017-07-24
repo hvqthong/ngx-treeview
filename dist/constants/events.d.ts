@@ -1,0 +1,25 @@
+export declare const TREE_EVENTS: {
+    onToggleExpanded: string;
+    onActivate: string;
+    onDeactivate: string;
+    onFocus: string;
+    onBlur: string;
+    onInitialized: string;
+    onUpdateData: string;
+    onMoveNode: string;
+    onEvent: string;
+    onLoadChild: string;
+    onChangeFilter: string;
+    toggleExpanded: string;
+    activate: string;
+    deactivate: string;
+    focus: string;
+    blur: string;
+    initialized: string;
+    updateData: string;
+    moveNode: string;
+    event: string;
+    loadChild: string;
+    changeFilter: string;
+};
+export declare function newName(name: any): any;
